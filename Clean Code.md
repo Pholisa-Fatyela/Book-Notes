@@ -9,12 +9,14 @@ _Clean Code_ outlines the tenets of writing readable, efficient, and maintainabl
 Topics span from choosing names for variables, to writing and formatting functions and classes, to designing system architecture. The overarching theme is one of software as a craft - like any other craft, the product is best when each step in the creative process is taken carefully and consciously.
 
 
-## Table of Contents <a name="toc"></a>
+<a name="toc"></a>
+## Table of Contents
 + [Chapter 1: Clean Code](#ch1)
 + [Chapter 2: Meaningful Names](#ch2)
 + [Chapter 3: Functions](#ch3)
 
-## Chapter 1: Clean Code <a name="ch1"></a>
+<a name="ch1"></a>
+## Chapter 1: Clean Code
 
 [(return to table of contents)](#toc)
 
@@ -39,7 +41,8 @@ Topics span from choosing names for variables, to writing and formatting functio
 > You know you are working on clean code when each routine you read turns out to be pretty much what you expected.
 
 
-## Chapter 2: Meaningful Names <a name="ch2"></a>
+<a name="ch2"></a>
+## Chapter 2: Meaningful Names
 
 [(return to table of contents)](#toc)
 
@@ -87,7 +90,8 @@ Topics span from choosing names for variables, to writing and formatting functio
 > ...if you can reliably remember that r is the lower-cased version of the url with the host and scheme removed, then you must clearly be very smart.
 
 
-## Chapter 3: Functions <a name="ch3"></a>
+<a name="ch3"></a>
+## Chapter 3: Functions
 
 [(return to table of contents)](#toc)
 
