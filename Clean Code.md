@@ -1,4 +1,22 @@
-## Chapter 1: Clean Code
+# Clean Code
+
+#### First Edition || By Robert C. Martin
+
+## Overview
+
+_Clean Code_ outlines the tenets of writing readable, efficient, and maintainable code. The book provides examples of many flavors of "bad code" and the problems it can cause, and explains how to transform it into the "clean code" that developers prefer.
+
+Topics span from choosing names for variables, to writing and formatting functions and classes, to designing system architecture. The overarching theme is one of software as a craft - like any other craft, the product is best when each step in the creative process is taken carefully and consciously.
+
+
+## Table of Contents <a name="toc"></a>
++ [Chapter 1: Clean Code](#ch1)
++ [Chapter 2: Meaningful Names](#ch2)
++ [Chapter 3: Functions](#ch3)
+
+## Chapter 1: Clean Code <a name="ch1"></a>
+
+[(return to table of contents)](#toc)
 
 #### On the Costs of Bad Code
 
@@ -21,7 +39,9 @@
 > You know you are working on clean code when each routine you read turns out to be pretty much what you expected.
 
 
-## Chapter 2: Meaningful Names
+## Chapter 2: Meaningful Names <a name="ch2"></a>
+
+[(return to table of contents)](#toc)
 
 #### Bad Naming Habits to Avoid
 
@@ -67,7 +87,9 @@
 > ...if you can reliably remember that r is the lower-cased version of the url with the host and scheme removed, then you must clearly be very smart.
 
 
-## Chapter 3: Functions
+## Chapter 3: Functions <a name="ch3"></a>
+
+[(return to table of contents)](#toc)
 
 #### Function Names & Bodies
 
