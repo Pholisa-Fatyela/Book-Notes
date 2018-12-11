@@ -8,6 +8,8 @@ _Clean Code_ outlines the tenets of writing readable, efficient, and maintainabl
 
 Topics span from choosing names for variables, to writing and formatting functions and classes, to designing system architecture. The overarching theme is one of software as a craft - like any other craft, the product is best when each step in the creative process is taken carefully and consciously.
 
+I highly recommend this book, especially for developers who work in Java. While the principles of clean code apply for most languages, many examples and suggestions throughout the text concern issues especially relevant for Java.
+
 
 <a name="toc"></a>
 ## Table of Contents
@@ -25,6 +27,7 @@ Topics span from choosing names for variables, to writing and formatting functio
 + [Chapter 12: Emergence](#ch12)
 + [Chapter 13: Concurrency](#ch13)
 + [Chapters 14 - 16: Case Studies](#ch14-ch16)
++ [Chapter 17: Smells and Heuristics](#ch17)
 
 
 <a name="ch1"></a>
@@ -170,7 +173,7 @@ Topics span from choosing names for variables, to writing and formatting functio
 
 #### Bad Comments
 
-+ _Mumbling_ - comments that make no sense to readers, and are more like the author's notes to themself
++ _Mumbling_ - comments that make no sense to readers, and are more like the author's "notes to self"
 + _Redundant comments_ - if the code is simple or self-explanatory, it doesn't need a comment
 + _Misleading comments_ - any comments that don't precisely match the behavior of the code
 + _Mandated comments_ - clutter resulting from rules that all functions/variables/classes must have complete documentation
@@ -224,6 +227,12 @@ Topics span from choosing names for variables, to writing and formatting functio
 + That a project has a cohesive set of formatting rules followed throughout is more important than any one team member's formatting preferences
     + Mismatched formatting looks unprofessional and will annoy, if not confuse, readers
 
+### Quotes
+
+> The coding style and readability set precedents that continue to affect maintainability and extensibility long after the original code has been changed beyond recognition. Your style and discipline survives, even though your code does not.
+
+> We want the software to have a consistent style. We don’t want it to appear to have been written by a bunch of disagreeing individuals.
+
 
 <a name="ch6"></a>
 ## Chapter 6: Objects and Data Structures
@@ -246,22 +255,36 @@ Topics span from choosing names for variables, to writing and formatting functio
 + Data structures make it easy to add new functions without changing existing data structures (because they have no functions!), but hard to add new data attributes (because all outside functions using the structure must be changed to incorporate the new attributes)
 + "Data transfer objects" are data structures with no functions whatsoever, like `struct` in C; they serve only to encapsulate data (often as a bridge between database records and application code)
 
+### Quotes
+
+> A class does not simply push its variables out through getters and setters. Rather it exposes abstract interfaces that allow its users to manipulate the _essence_ of the data, without having to know its implementation.
+
 
 <a name="ch7"></a>
 ## Chapter 7: Error Handling
 
 [(return to table of contents)](#toc)
 
+#### Exceptions
+
 + Exceptions are preferred to functions that return error codes (or set error flags)
     + Error codes returned to calling functions must be handled in that function, cluttering the logic
     + Logic in a `try` block can be extracted to its own function, allowing separation of concerns (normal flow vs exceptional flow)
 + Checked exceptions (`throws...` in a Java method declaration) break encapsulation, since calling methods then know some implementation details of the methods they call
 + Error messages in exceptions should be informative
+
+#### Passing/Returning `null`
 + Returning `null` leads to the possibility of null pointer exceptions, which must be caught or prevented with checks for `null`
     + Instead, consider returning a null-like value, such as an empty collection
 + Passing `null` into a function creates a burden to check for and deal will `null` arguments
     + It's best to avoid ever passing `null` as an argument (i.e., modify the logic of the calling function to avoid this)
     + _Note: while it's certainly cleaner-looking when the callee doesn't have to have to check for `null` arguments, it requires a lot of trust in the caller, decreasing robustness_
+
+### Quotes
+
+> Error handling is important, but if it obscures logic, it’s wrong.
+
+> We can write robust clean code if we see error handling as a separate concern, something that is viewable independently of our main logic.
 
 
 <a name="ch8"></a>
@@ -270,13 +293,23 @@ Topics span from choosing names for variables, to writing and formatting functio
 [(return to table of contents)](#toc)
 
 + "Boundaries" here refers to the points of interaction between APIs created by someone else and code written by the developer
-+ One way to hide unneeded/unwanted parts of an API being used it to simply encapsulate it in a custom class with the desired API
-    + Similarly, this can be implemented as an "adapter" class between the desired interface and the actual one
-    + This also facilitates easy changes to implementation details, such as swapping out an underlying data structure for a different one
-+ Writing unit tests for proper usage of an interface is one way to learn a third-party API in a controlled way
-    + This separates the challenge of integrating the third-party API with existing code for the project that requires it from that of learning the API
+
+#### Handling Boundaries
+
++ One way to hide unneeded/unwanted parts of a third-party API is to simply encapsulate it in a custom class with the desired API
+    + This could take the form of a "wrapper" class around the third-party API, or an "adapter" interface that acts as a bridge between the application and the API
+    + This scheme facilitates easy changes to implementation details, such as swapping out an underlying data structure for a different one
 + Clean, well-defined boundaries that insulate the system from implementation details and changes in third-party APIs are preferable to tightly coupled dependencies
     + Rewriting/refactoring a custom interface that serves as a bridge between the project and a third-party API is _much_ easier than locating and rewriting each API call throughout the project
+
+#### Learning Third-Party APIs
+
++ Writing unit tests for proper usage of an interface is one way to learn a third-party API in a controlled way
+    + This separates the challenge of integrating the third-party API with existing code for the project that requires it from that of learning the API
+
+### Quotes
+
+> It’s better to depend on something you control than on something you don’t control, lest it end up controlling you.
 
 
 <a name="ch9"></a>
@@ -284,15 +317,23 @@ Topics span from choosing names for variables, to writing and formatting functio
 
 [(return to table of contents)](#toc)
 
+#### Guidelines for Writing Tests
+
 + Test-driven development (TDD) implies that tests should be written along with production code
     + Specifically, a minimal failing test should be written, then minimal code to pass that test (and previous tests) should be written, and then iterate
 + A messy test suite results in the same maintainability problems as messy production code
+    + Tests are not an exception to "code is read more than it is written"
     + If the messy test suite is simply discarded, then developers have no way of verifying that changes don't break earlier functionality
-+ Tests are not an exception to "code is read more than it is written"
 + Testing code is less constrained by efficiency than production code, so long as it doesn't take prohibitively long to run the testing suite
 + Minimizing the number of `assert` statements per test keeps tests simple to read
     + Each test should test one (minimal) concept only; if this requires multiple `assert` statements, it's okay
 + Tests should be _fast, independent, repeatable, self-validating, and timely_ ("FIRST")
+
+### Quotes
+
+> Test code is just as important as production code. It is not a second-class citizen. It requires thought, design, and care.
+
+> Without tests every change is a possible bug.
 
 
 <a name="ch10"></a>
@@ -300,8 +341,13 @@ Topics span from choosing names for variables, to writing and formatting functio
 
 [(return to table of contents)](#toc)
 
+#### Class Formatting
+
 + Classes should declare variables first: constants, followed by private static variables, followed by private instance variables
 + Public methods come after variable declarations, with any private utility functions they use grouped after the calling function
+
+#### Class Design Principles
+
 + Classes should be small - like functions, they should be limited to a single responsibility
     + Size generally self-limits once a class is limited to "one responsibility"
 + Classes should be _cohesive_, meaning that most functions within the class need most of the instance variables to operate
@@ -312,6 +358,12 @@ Topics span from choosing names for variables, to writing and formatting functio
 + Decouple class dependencies by formalizing/abstracting them using an interface, then hiding specific implementations behind that interface
     + This approach can help when code is being tested, as well as being changed
     + The given examples is a `Portfolio` class that depends on a `TokyoStockExchange` API; instead, it can be written to depend on a new, more abstract `StockExchange` interface, which can be implemented by the `TokyoStockExchange` or some stock exchange class made explicitly for testing `Portfolio`
+
+### Quotes
+
+> If we cannot derive a concise name for a class, then it’s likely too large.
+
+> Do you want your tools organized into toolboxes with many small drawers each containing well-defined and well-labeled components? Or do you want a few drawers that you just toss everything into?
 
 
 <a name="ch11"></a>
@@ -330,20 +382,28 @@ Topics span from choosing names for variables, to writing and formatting functio
 [(return to table of contents)](#toc)
 
 + This chapter focuses on four rules of simple design (due to Kent Beck) that facilitate the emergence of clean structures
-+ _Rule 1:_ Runs all the tests
-    + Systems must function as they're intended; otherwise, how "clean" or "simple" they are doesn't really matter
-    + Continuous testing (TDD) may expose excessive coupling or complexity in the code, since tests are harder to write for convoluted code
-    + For example, if a class/method has "more than one responsibility", it will quickly become apparent that two separate functions are being tested for one entity
-+ _Rule 2:_ Contains no duplication
-    + Similar/identical lines of code are obvious candidates for refactoring
-    + Functions with similar implementations may contain duplication; perhaps refactor one to use the other, or extract the shared implementation details into a third function that both other functions call
-    + Higher-level duplication may require new class inheritance schemes, abstract classes, or interfaces
-+ _Rule 3:_ Expresses the intent of the programmers
-    + Much of this book has already dealt with ways to make code expressive: choose descriptive names, write small functions/classes, and include a test suite that clearly demonstrates desired behavior
-+ _Rule 4:_ Minimizes the number of classes and methods
-    + Creating a class or method for every possible bit of code that could possilby be its own class or method ends up defeating expressiveness and simplicity, at a certain point
-    + On the other hand, having too _few_ classes and methods (especially large ones) may indicate that they each have too much responsibility
-    + Don't go overboard on "no duplication", "expressive naming", or any other design philosophies that lead to a counterproductive, excessively high number of classes or methods
+
+#### _Rule 1:_ Runs all the tests
+
++ Systems must function as they're intended; otherwise, how "clean" or "simple" they are doesn't really matter
++ Continuous testing (TDD) may expose excessive coupling or complexity in the code, since tests are harder to write for convoluted code
++ For example, if a class/method has "more than one responsibility", it will quickly become apparent that two separate functions are being tested for one entity
+
+#### _Rule 2:_ Contains no duplication
+
++ Similar/identical lines of code are obvious candidates for refactoring
++ Functions with similar implementations may contain duplication; perhaps refactor one to use the other, or extract the shared implementation details into a third function that both other functions call
++ Higher-level duplication may require new class inheritance schemes, abstract classes, or interfaces
+
+#### _Rule 3:_ Expresses the intent of the programmers
+
++ Much of this book has already dealt with ways to make code expressive: choose descriptive names, write small functions/classes, and include a test suite that clearly demonstrates desired behavior
+
+#### _Rule 4:_ Minimizes the number of classes and methods
+
++ Creating a class or method for every possible bit of code that could possibly be its own class or method ends up defeating expressiveness and simplicity, at a certain point
++ On the other hand, having too _few_ classes and methods (especially large ones) may indicate that they each have too much responsibility
++ Don't go overboard on "no duplication", "expressive naming", or any other design philosophies that lead to a counterproductive, excessively high number of classes or methods
 
 ### Quotes
 
@@ -355,12 +415,21 @@ Topics span from choosing names for variables, to writing and formatting functio
 
 [(return to table of contents)](#toc)
 
-+ Concurrency decoupled what is done from when it gets done
+#### Benefits of Concurrency
+
++ Concurrency decouples _what_ is done from _when_ it gets done
 + Concurrency addresses throughput and response time challenges, and may lead to a cleaner overall structure
     + A particularly common use for concurrency is to continue doing work while waiting at bottlenecks, such as IO operations
+
+#### Drawbacks of Concurrency
+
 + Concurrency leads to some overhead (development time and execution time)
+    + Make sure the benefits of multithreading outweigh this overhead
 + Concurrency introduces significant complexity, even for simple systems
 + Concurrency bugs are generally hard to repeat
+
+#### Concurrent Design Guidelines
+
 + Code with concurrent logic should be separated from single-threaded code
 + Data shared between threads should be very limited in scope and means of being accessed/updated
     + The more critical sections are spread throughout the code, the more they're likely to be mishandled
@@ -383,18 +452,23 @@ Topics span from choosing names for variables, to writing and formatting functio
 [(return to table of contents)](#toc)
 
 + Most of the items in this chapter are covered in more detail in previous parts of the book; these aren't repeated here
-+ A few code smells unique to this chapter:
-    + _Clutter:_ unused functions, variables, empty constructors, and so forth should all be removed
-    + _Feature envy:_ excessive reliance on, or manipulation of, another class's data; this is generally far too much coupling
-    + _Misplaced responsibility:_ constants, functions, and the like should be placed with whatever code other readers would most expect them to be near
-    + _Inappropriate static:_ when making a member static, think about whether there's any reason it may need to be polymorphic in the future; if so, don't make it static
-+ A few guidelines unique to this chapter:
-    + _Encapsulate conditionals:_ boolean tests are easier to understand if they're extracted to a method whose name describes the intent of the test
-    + _Avoid negative conditionals:_ remembering a "not" for one expression in a conditional requires extra mental work
-    + _Encapsulate boundary conditions:_ `str.length() + 1` repeated over and over is hard to read, especially if mixed with `str.length()`; instead, store boundary conditions in a variable like `int end = str.length() + 1`
-    + _Keep configurable data at high levels:_ don't bury user-configurable values deep within the program; handle them up-front, preferably in `main()`
-+ Java-specific guidelines:
-    + Prefer import wildcards to long import lists
-    + Don't import constants through an arbitrary, non-obvious interface; put them in a dedicated "constants" class and use a static import
-    + Prefer enums to `int` constants; they're more centralized and powerful (i.e., they can defined methods and fields)
-    
+
+#### Code smells unique to this chapter
+
++ _Clutter:_ unused functions, variables, empty constructors, and so forth should all be removed
++ _Feature envy:_ excessive reliance on, or manipulation of, another class's data; this is generally far too much coupling
++ _Misplaced responsibility:_ constants, functions, and the like should be placed with whatever code other readers would most expect them to be near
++ _Inappropriate static:_ when making a member static, think about whether there's any reason it may need to be polymorphic in the future; if so, don't make it static
+
+#### Guidelines unique to this chapter
+
++ _Encapsulate conditionals:_ boolean tests are easier to understand if they're extracted to a method whose name describes the intent of the test
++ _Avoid negative conditionals:_ remembering a "not" for one expression in a conditional requires extra mental work
++ _Encapsulate boundary conditions:_ `str.length() + 1` repeated over and over is hard to read, especially if mixed with `str.length()`; instead, store boundary conditions in a variable like `int end = str.length() + 1`
++ _Keep configurable data at high levels:_ don't bury user-configurable values deep within the program; handle them up-front, preferably in `main()`
+
+#### Java-specific guidelines
+
++ Prefer import wildcards to long import lists
++ Don't import constants through an arbitrary, non-obvious interface; put them in a dedicated "constants" class and use a static import
++ Prefer enums to `int` constants; they're more centralized and powerful (i.e., they can defined methods and fields)
