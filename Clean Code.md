@@ -20,6 +20,11 @@ Topics span from choosing names for variables, to writing and formatting functio
 + [Chapter 7: Error Handling](#ch7)
 + [Chapter 8: Boundaries](#ch8)
 + [Chapter 9: Unit Tests](#ch9)
++ [Chapter 10: Classes](#ch10)
++ [Chapter 11: Systems](#ch11)
++ [Chapter 12: Emergence](#ch12)
++ [Chapter 13: Concurrency](#ch13)
++ [Chapters 14 - 16: Case Studies](#ch14-ch16)
 
 
 <a name="ch1"></a>
@@ -272,3 +277,124 @@ Topics span from choosing names for variables, to writing and formatting functio
     + This separates the challenge of integrating the third-party API with existing code for the project that requires it from that of learning the API
 + Clean, well-defined boundaries that insulate the system from implementation details and changes in third-party APIs are preferable to tightly coupled dependencies
     + Rewriting/refactoring a custom interface that serves as a bridge between the project and a third-party API is _much_ easier than locating and rewriting each API call throughout the project
+
+
+<a name="ch9"></a>
+## Chapter 9: Unit Tests
+
+[(return to table of contents)](#toc)
+
++ Test-driven development (TDD) implies that tests should be written along with production code
+    + Specifically, a minimal failing test should be written, then minimal code to pass that test (and previous tests) should be written, and then iterate
++ A messy test suite results in the same maintainability problems as messy production code
+    + If the messy test suite is simply discarded, then developers have no way of verifying that changes don't break earlier functionality
++ Tests are not an exception to "code is read more than it is written"
++ Testing code is less constrained by efficiency than production code, so long as it doesn't take prohibitively long to run the testing suite
++ Minimizing the number of `assert` statements per test keeps tests simple to read
+    + Each test should test one (minimal) concept only; if this requires multiple `assert` statements, it's okay
++ Tests should be _fast, independent, repeatable, self-validating, and timely_ ("FIRST")
+
+
+<a name="ch10"></a>
+## Chapter 10: Classes
+
+[(return to table of contents)](#toc)
+
++ Classes should declare variables first: constants, followed by private static variables, followed by private instance variables
++ Public methods come after variable declarations, with any private utility functions they use grouped after the calling function
++ Classes should be small - like functions, they should be limited to a single responsibility
+    + Size generally self-limits once a class is limited to "one responsibility"
++ Classes should be _cohesive_, meaning that most functions within the class need most of the instance variables to operate
+    + If a subset of functions is using a subset of the instance variables particularly often, while other functions aren't, then those functions and variables are a candidate for their own class
++ Classes should be designed to minimize the risk of breaking existing functionality when changes are needed
+    + This ties in well with the single responsibility principle and small classes, which minimize the coupling of code
+    + Ideally, new features should be extensions to the system, not modifications to existing classes
++ Decouple class dependencies by formalizing/abstracting them using an interface, then hiding specific implementations behind that interface
+    + This approach can help when code is being tested, as well as being changed
+    + The given examples is a `Portfolio` class that depends on a `TokyoStockExchange` API; instead, it can be written to depend on a new, more abstract `StockExchange` interface, which can be implemented by the `TokyoStockExchange` or some stock exchange class made explicitly for testing `Portfolio`
+
+
+<a name="ch11"></a>
+## Chapter 11: Systems
+
+[(return to table of contents)](#toc)
+
++ The startup logic of an application should be decoupled from its runtime logic
+    + This can be done by moving all startup construction tasks to `main()`, and hiding that logic from the rest of the system
++ _Revisit the rest of this chapter_
+
+
+<a name="ch12"></a>
+## Chapter 12: Emergence
+
+[(return to table of contents)](#toc)
+
++ This chapter focuses on four rules of simple design (due to Kent Beck) that facilitate the emergence of clean structures
++ _Rule 1:_ Runs all the tests
+    + Systems must function as they're intended; otherwise, how "clean" or "simple" they are doesn't really matter
+    + Continuous testing (TDD) may expose excessive coupling or complexity in the code, since tests are harder to write for convoluted code
+    + For example, if a class/method has "more than one responsibility", it will quickly become apparent that two separate functions are being tested for one entity
++ _Rule 2:_ Contains no duplication
+    + Similar/identical lines of code are obvious candidates for refactoring
+    + Functions with similar implementations may contain duplication; perhaps refactor one to use the other, or extract the shared implementation details into a third function that both other functions call
+    + Higher-level duplication may require new class inheritance schemes, abstract classes, or interfaces
++ _Rule 3:_ Expresses the intent of the programmers
+    + Much of this book has already dealt with ways to make code expressive: choose descriptive names, write small functions/classes, and include a test suite that clearly demonstrates desired behavior
++ _Rule 4:_ Minimizes the number of classes and methods
+    + Creating a class or method for every possible bit of code that could possilby be its own class or method ends up defeating expressiveness and simplicity, at a certain point
+    + On the other hand, having too _few_ classes and methods (especially large ones) may indicate that they each have too much responsibility
+    + Don't go overboard on "no duplication", "expressive naming", or any other design philosophies that lead to a counterproductive, excessively high number of classes or methods
+
+### Quotes
+
+> Duplication is the primary enemy of a well-designed system. It represents additional work, additional risk, and additional unnecessary complexity.
+
+
+<a name="ch13"></a>
+## Chapter 13: Concurrency
+
+[(return to table of contents)](#toc)
+
++ Concurrency decoupled what is done from when it gets done
++ Concurrency addresses throughput and response time challenges, and may lead to a cleaner overall structure
+    + A particularly common use for concurrency is to continue doing work while waiting at bottlenecks, such as IO operations
++ Concurrency leads to some overhead (development time and execution time)
++ Concurrency introduces significant complexity, even for simple systems
++ Concurrency bugs are generally hard to repeat
++ Code with concurrent logic should be separated from single-threaded code
++ Data shared between threads should be very limited in scope and means of being accessed/updated
+    + The more critical sections are spread throughout the code, the more they're likely to be mishandled
+    + Consider making read-only copies when shared data is accessed, then merge modifications in a single thread with write-access
++ The more independent different threads are (i.e., the less data they share), the less likely concurrency bugs are
++ _Revisit the rest of this chapter_
+
+
+<a name="ch14-ch16"></a>
+## Chapters 14 - 16: Case Studies
+
+[(return to table of contents)](#toc)
+
++ These chapters present three in-depth, code-heavy case studies in refactoring code; they are not well-suited for notes, so they're omitted here
+
+
+<a name="ch17"></a>
+## Chapter 17: Smells and Heuristics
+
+[(return to table of contents)](#toc)
+
++ Most of the items in this chapter are covered in more detail in previous parts of the book; these aren't repeated here
++ A few code smells unique to this chapter:
+    + _Clutter:_ unused functions, variables, empty constructors, and so forth should all be removed
+    + _Feature envy:_ excessive reliance on, or manipulation of, another class's data; this is generally far too much coupling
+    + _Misplaced responsibility:_ constants, functions, and the like should be placed with whatever code other readers would most expect them to be near
+    + _Inappropriate static:_ when making a member static, think about whether there's any reason it may need to be polymorphic in the future; if so, don't make it static
++ A few guidelines unique to this chapter:
+    + _Encapsulate conditionals:_ boolean tests are easier to understand if they're extracted to a method whose name describes the intent of the test
+    + _Avoid negative conditionals:_ remembering a "not" for one expression in a conditional requires extra mental work
+    + _Encapsulate boundary conditions:_ `str.length() + 1` repeated over and over is hard to read, especially if mixed with `str.length()`; instead, store boundary conditions in a variable like `int end = str.length() + 1`
+    + _Keep configurable data at high levels:_ don't bury user-configurable values deep within the program; handle them up-front, preferably in `main()`
++ Java-specific guidelines:
+    + Prefer import wildcards to long import lists
+    + Don't import constants through an arbitrary, non-obvious interface; put them in a dedicated "constants" class and use a static import
+    + Prefer enums to `int` constants; they're more centralized and powerful (i.e., they can defined methods and fields)
+    
