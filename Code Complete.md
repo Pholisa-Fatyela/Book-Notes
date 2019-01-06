@@ -15,8 +15,11 @@ These notes are organized by chapter, presenting main points for each subsection
 ## Table of Contents
 + __Part I - Laying the Foundation__
     - [1) Welcome to Software Construction](#ch1)
-    - _Work in progress..._
+    - [2) Metaphors for a Richer Understand of Software Development](#ch2)
+    - [3) Measure Twice, Cut Once: Upstream Prerequisites](#ch3)
+    - [4) Key Construction Decisions](#ch4)
 + __Part II - Creating High-Quality Code__
+    - [5) Design in Construction](#ch5)
     - _Work in progress..._
 + __Part III - Variables__
     - _Work in progress..._
@@ -29,7 +32,8 @@ These notes are organized by chapter, presenting main points for each subsection
 + __Part VII - Software Craftsmanship__
     - _Work in progress..._
 
-    
+
+
 <a name="ch1"></a>
 ## Chapter 1 - Welcome to Software Construction
 
@@ -59,3 +63,206 @@ These notes are organized by chapter, presenting main points for each subsection
 + Informally, construction is "programming" - the central, most essential step in software development
 + Construction does not refer to the preliminary stages of software development (e.g., problem definition), nor the later stages (e.g., maintenance)
 + Doing construction well delivers a variety of benefits throughout the software lifecycle (such as easier maintenance and testing)
+
+
+
+<a name="ch2"></a>
+## Chapter 2 - Metaphors for a Richer Understand of Software Development
+
+[(return to table of contents)](#toc)
+
+### Summary
+
+#### 2.1 The Importance of Metaphors
+
++ _Models_ are metaphors relating a less-understood topic to a better-understood one
+    - Have often brought about breakthroughs or "paradigm shifts" in science
+    - Can be overextended, and vary in their relevance/accuracy
+
+#### 2.2 - How to Use Software Metaphors
+
++ Metaphors are _more like heuristics than algorithms_ (that is, they are not a definite route to a perfect solution, but may lead in the right direction)
++ In software development, metaphors are useful for _conceptualizing ways to approach new problems_ (or new ways to approach old problems)
+
+#### 2.3 Common Software Metaphors
+
++ __Penmanship:__ might be an okay metaphor for very small programs written by an individual; beyond that, fails to convey the complexity of development, the software lifecycle, and the importance of planning
++ __Farming:__ attempts to express the value of incremental development ("growing" a system bit-by-bit); the metaphor doesn't extend well, mostly because code doesn't autonomously "grow", and is never "harvested"
++ __Accretion:__ like an oyster making a pearl; a better metaphor for incremental development than "farming"
++ __Building:__ both software and physical construction require different approaches and degrees of planning as they scale up in size and complexity; extensible to testing/inspections, importance of careful early design, and more
+    - Better as a metaphor for linear "waterfall" models than iterative development (you can't just keep adding new features to a skyscraper with rapid turnaround time)
+
+
+### Quotes
+
+> In general, the power of models is that they're vivid and can be grasped as conceptual wholes. They suggest properties, relationships, and additional areas of inquiry.
+
+> A software metaphor is more like a searchlight than a road map. It doesn't tell you where to find the answer; it tells you how to look for it.
+
+
+### Takeaways
+
++ Metaphors serve as heuristics to help conceptualize potential solutions to software development problems
++ One of the best metaphors is building a physical structure, although many others are possible
+    - The building metaphor highlights the importance of scale on the development process; the bigger the product, the more rigid the methodology
+
+
+
+<a name="ch3"></a>
+## Chapter 3 - Measure Twice, Cut Once: Upstream Prerequisites
+
+[(return to table of contents)](#toc)
+
+### Summary
+
+#### 3.1 - Importance of Prerequisites
+
++ Construction is the middle portion of software development
+    - Poorly done upstream prerequisites can already sink a project by this point, whereas proper preparation can expedite smooth construction
++ Preparation is often neglected because many programmers lack the required skills, or the team jumps to construction too early
+
+#### 3.2 - Determine the Kind of Software You're Working On
+
++ In _sequential development_, the cost of neglected prerequisites is paid at end of the project; in _iterative development,_ it is paid throughout
++ Sequential approaches are appropriate when requirements are stable and well-understood; iterative approaches are appropriate when they are not
+
+#### 3.3 - Problem-Definition Prerequisite
+
++ The problem definition is the foundation of development; it should not include solutions, only a _statement of the problem to be solved,_ in "user language"
+
+#### 3.4 - Requirements Prerequisite
+
++ Explicit requirements ensure that users' needs are driving development, and provide a _basis for software functionality_
++ Fixing errors in requirements becomes more costly as the project progresses; thus, they should be well-specified early in development
++ Changes in requirements are typical; however, the _cost and necessity of changes should be considered_ before actually going through with them
++ Projects likely to have many requirements changes should consider an iterative or evolutionary development model
+
+#### 3.5 - Architecture Prerequisite
+
++ The quality of software architecture can greatly impact how easy the product will be to construct and maintain
++ Like requirements, _changes to architecture become more costly as development proceeds_
++ Components of a system architecture include an overview, design rationale, module definitions, communication rules, user interface design, resource management plans, security considerations, performance/scalability estimates, I/O schemes, and error handling approach
+
+#### 3.6 - Amount of Time to Spend on Upstream Prerequisites
+
++ About "10 to 20 percent" of effort and "20 to 30 percent" of time should go to upstream prerequisites
++ The time spent can vary based on size and formality of the project
+
+
+### Quotes
+
+> If the foundation hasn't been laid well or the planning is inadequate, the best you can do during construction is to keep damage to a minimum.
+
+
+### Takeaways
+
++ Problem definition, requirements definition, and architecture design should all be considered before construction begins
+    - More time should be spent on these prerequisites for larger, more complex, or more critical systems
++ Poorly-handled prerequisites are costly, causing construction to be done more slowly, or even done multiple times
++ The type of project determines whether a sequential or iterative is more appropriate (and likely less costly)
+
+
+
+<a name="ch4"></a>
+## Chapter 4 - Key Construction Decisions
+
+[(return to table of contents)](#toc)
+
+### Summary
+
+#### 4.1 - Choice of Programming Language
+
++ Programmers are more productive in languages they are more familiar with (obviously)
++ High-level languages generally increase programmer productivity and code reliability
+
+#### 4.2 - Programming Conventions
+
++ Adhering to style conventions at both the architectural and construction levels allows software to appear as a cohesive whole, rather than a messy conglomerate of different styles; this makes code easier to read and work with
+
+#### 4.3 - Your Location on the Technology Wave
+
++ Late in a "technology wave", development practices are well-established, with well-tested, documented languages, compilers, and other tools
++ Early in a "technology wave", fewer languages and tools exist, with less documentation and more bugs
+
+#### 4.4 - Selection of Major Construction Practices
+
++ Practices (e.g., defining conventions, solo/pair programming, version control, tests) should be decided on and documented before beginning construction
+
+
+### Quotes
+
+> One key to successful programming is avoiding arbitrary variations so that your brain can be free to focus on the variations that are really needed.
+
+
+### Takeaways
+
++ Conventions for construction should be established before programming begins
++ Consider how well-suited the language of choice is for the project
++ Be aware of your location on the "wave" of whatever technologies are being used
+
+
+
+<a name="ch5"></a>
+## Chapter 5 - Design in Construction
+
+[(return to table of contents)](#toc)
+
+### Summary
+
+#### 5.1 - Design Challenges
+
++ "Design" is the step between requirements definition and actual coding
++ When developing a high-level design, high-level tradeoffs (such as development time vs optimal performance) should be considered
++ Software designs typically entail lots of trial and error; they are iterative, evolutionary products
+
+#### 5.2 - Key Design Concepts
+
++ A fundamental design challenge is managing the complexity of software solutions to real-world problems, such that the program's behavior is readily comprehensible and verifiably correct
+    - The standard solution to managing complexity is modularity; complex systems should be composed of relatively independent subsystems (e.g., classes and packages) that interact in only necessary, well-specified ways
++ Characteristics of good designs include minimal complexity, ease of maintenance, loose coupling, easy extensibility/reusability, portability, and leanness
++ Five levels of design: software system design, division into subsystems/packages, division into classes, division into routines, and internal routine design
+
+#### 5.3 - Design Building Blocks: Heuristics
+
++ **Object orientation** - identify attributes and behaviors of real-world objects, then use these as a model for software objects
++ **Abstraction** - safely "ignore" details within lower levels (e.g., routine and class interfaces)
++ **Encapsulation** - hide details within lower levels ("need to know" basis)
++ **Inheritance** - allows sharing of behavior/attributes between objects sharing some higher, "inherited" level of abstraction, while also allowing specific operations based on key differences
++ **Information hiding** - similar to encapsulation, in that both hide complexity
+    - Bugs in properly hidden data/routines are more easily tracked down than bugs in code with unrestricted scope
+    - In the design phase, information hiding consists of deciding which fields have what degree of visibility/access (e.g., public, private, protected, etc)
+    - Worries about performance penalties incurred by indirect access routines are best postponed until performance can actually be measured - i.e., not in the design phase
++ **Change anticipation** - encapsulate and isolate parts of code that are likely to change (minimizes the effects of those changes on the system)
++ **Loose coupling** - coupling refers to how tightly related two or more classes/routines are; loose coupling refers to these links being "small, direct, visible, and flexible"
++ **Design patterns** - many software problems can benefit from existing solution patterns
+    - Patterns provide abstractions and well-understood common ground
+    - They consist of a set of possible pre-made design schemes, which is generally preferable to starting from scratch
+
+#### 5.4 - Design Practices
+
++ **Iteration** - cycling through different potential designs, iteratively improving them, is a good way to balance both high and low-level concerns
++ **Divide and conquer** - focusing on subcomponents of the overall design one at a time can help manage complexity
++ **Top-down design** - start at a high level of abstraction (e.g., "base" classes), then work down to specifics
+    - Starting with general classes, then iteratively decomposing them into more specific classes, is a divide and conquer process that reduces cognitive load at any one time
++ **Bottom-down design** - start at a low level of abstraction (e.g., specific objects), then generalize
+    - Starting with specific, required low-level functions, then composing them into more generalized groupings may be easier for certain design challenges
++ **Prototyping** - to better understand the problem (and whether a potential solution is viable), create a minimal amount of throwaway code to test out the design
++ **Collaborative design** - consult with others, formally or informally, about the design (this could also be "collaboration" with oneself, via review of older work)
++ _Design documentation_ can be captured as in-code comments (especially class-level comments), in a dedicated Wiki, in written summaries, or in diagrams (anywhere from pictures of whiteboards to UML diagrams)
+
+#### 5.5. - Comments on Popular Methodologies
+
++ Neither extensive up-front design of every detail, nor a complete lack of a design phase are appropriate; some balance should be struck, depending on the project
+
+
+### Quotes
+
+> The point of design is partly to create possibilities and partly to restrict possibilities.
+
+> When a project reaches the point at which no one completely understands the impact that code changes in one area will have on other areas, progress grinds to a halt.
+
+
+### Takeaways
+
++ The overarching goal of design is to manage complexity cleanly, making the rest of construction easier and less error-prone
++ Modularity, information hiding, and encapsulation are key considerations in any complex design
