@@ -20,6 +20,7 @@ These notes are organized by chapter, presenting main points for each subsection
     - [4) Key Construction Decisions](#ch4)
 + __Part II - Creating High-Quality Code__
     - [5) Design in Construction](#ch5)
+    - [6) Class Foundations: Abstract Data Types (ADTs)](#ch6)
     - _Work in progress..._
 + __Part III - Variables__
     - _Work in progress..._
@@ -266,3 +267,65 @@ These notes are organized by chapter, presenting main points for each subsection
 
 + The overarching goal of design is to manage complexity cleanly, making the rest of construction easier and less error-prone
 + Modularity, information hiding, and encapsulation are key considerations in any complex design
+
+
+
+<a name="ch6"></a>
+## Chapter 6 - Working Classes
+
+[(return to table of contents)](#toc)
+
+### Summary
+
+#### 6.1 - Class Foundations: Abstract Data Types (ADTs)
+
++ An _abstract data type (ADT)_ is a collection of data and operations on that data
++ ADTs can hide implementation details from parts of the program that don't need to know about them; this makes changing internal details relatively painless
++ ADTs gather related code in one place, making it easier to design a clean interface, assess correctness, and improve performance
++ ADTs facilitate self-documentating code; a clean interface should include clear, unambiguous routine names
++ As their name implies, ADTs provide a level of abstraction that allow the rest of the program to work with data at a higher, "real-world" level, without undue concern over the implementation
+    - For example, a program can call `dequeue()` on a queue ADT (treated as a real-world queue) without giving much thought to the underlying code
+    - Of course, the caller may be concerned about implementation in terms of performance/efficiency on various metrics
++ ADTs can also be layered, however, such that a general-purpose "stack" ADT could underlie a real-world "employees" ADT
++ ADTs can be implemented in non-object-oriented languages, although interfacing with them becomes more complex
++ A class is an "abstract data type plus inheritance and polymorphism"
+
+#### 6.2 - Good Class Interfaces
+
++ Class interface methods should be a cohesive group of methods with names using abstract language (e.g., `addEmployee()` instead of `pushEmployeeToStack()`
++ The interface should deal with only one level of abstraction
++ Accessibility - users should not be able to access any more fields or methods than necessary
+
+#### 6.3 - Design and Implementation Issues
+
++ Containment ("has a" relationships) should be implemented by making one object a member of another
++ Inheritance ("is a" relationships) should be implemented through subclassing
+    - Issues to consider: visibility of methods/members to subclasses; default implementations of methods; `final` members; `abstract` members; overly deep inheritance hierarchies
+
+#### 6.4 - Reasons to Create a Class
+
++ **Modeling real-world objects**
++ **Modeling abstract objects** - such as generalizations of a class of concrete, real-world objects
++ **Reducing/isolating complexity** - once the implementation of a class is written, its abstract API can be used, allowing implementation details to be "ignored"
++ **Limiting the effects of changes** - if encapsulation is done well, changes to implementation should be localized
++ **Hiding global data** - accessing global data through methods encapsulates it better, insulating user classes from implementation changes
+
+#### 6.5 - Language-Specific Issues
+
++ These include whether methods are "virtual" by default, whether methods can be overridden, and whether operators can/should be overridden
+
+#### 6.6 - Beyond Classes: Packages
+
++ Grouping related classes into the same namespace is generally good practice - it's just modularity at a higher level
+
+### Quotes
+
+> A key to being an effective programmer is maximizing the portion of a program that you can safely ignore while working on any one section of code. Classes are the primary tool for accomplishing that objective.
+
+
+### Takeaways
+
++ Classes should present a clean, user-friendly API at a single level of abstraction
++ Classes should be leveraged to hide implementation details as much as possible, to insulate other classes from internal changes
++ Classes are for managing complexity; they should be designed with that goal in mind
+
