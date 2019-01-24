@@ -31,6 +31,7 @@ These notes are organized by chapter, presenting main points for each subsection
 + __Part VI - System Considerations__
     - _Work in progress..._
 + __Part VII - Software Craftsmanship__
+    - [31) Layout and Style](#ch31)
     - _Work in progress..._
 
 
@@ -328,4 +329,76 @@ These notes are organized by chapter, presenting main points for each subsection
 + Classes should present a clean, user-friendly API at a single level of abstraction
 + Classes should be leveraged to hide implementation details as much as possible, to insulate other classes from internal changes
 + Classes are for managing complexity; they should be designed with that goal in mind
+
+
+
+<a name="ch31"></a>
+## Chapter 31 - Layout and Style
+
+[(return to table of contents)](#toc)
+
+### Summary
+
+#### 31.1 - Layout Fundamentals
+
++ Well-formatted code is code that highlights the logical structure of the program
+    - Programmers don't typeset; they program; so, logical readability trumps how "pretty" the text looks
++ Formatting (especially whitespace) should reflect the intent of the code
+    - Blocks should be indented properly
+    - Operands in complex expressions should be grouped according to the order of operations
+
+#### 31.2 - Layout Techniques
+
++ Use blank lines to separate logically-related groups of code within a routine
+    - Also use blank lines to separate routines, classes, and other high-level structures
++ Indent code consistently with the logical blocks that contain them
+    - Studies show that two-to-four space indents are the most readable
++ Use parentheses to express the intent of complex expressions, even when not required by the order of operations
+
+#### 31.3 - Layout Styles
+
++ _This section outlines several block indentation styles; they are not all repeated here - just pick one that is conventional to the language/company/team/project, and use it consistently_
+
+#### 31.4 - Laying Out Control Structures
+
++ Place blank lines between logical blocks, not only blocks defined by control structures
++ Use a consistent style for one-statement blocks (e.g., an if statement with only one line)
++ Break long conditionals into multiple lines in whichever way best conveys the intent and makes any mistakes obvious (e.g., line up similar checks vertically)
+
+#### 31.5 - Laying Out Individual Statements
+
++ Line length limits (e.g., 80 characters) help avoid overly long lines and overly nested blocks
++ Use spaces to make statements more readable; avoid overly dense blocks of text
++ Put each statement on its own line, even if the language allows multiple statements to share one line
++ Avoid including operations with side-effects in another line of code
+    - A common example of this is the increment and decrement operators (`++` and `--`), which are often hidden within other lines, where they can be easily overlooked; additionally, the order of evaluation may cause undue confusion
++ One variable declaration per line is generally the easiest to read, as are declarations grouped by type
+
+#### 31.6 - Laying Out Comments
+
++ Indent comments so they're flush with the corresponding code
++ Surrounding comments (on top and/or bottom) with blank lines can help readability
+
+#### 31.7 - Laying Out Routines
+
++ Use blank lines to separate logically separate blocks within routines
+
+#### 31.8 - Laying Out Classes
+
++ A standard order to present class members in is: header comment, constructors/destructors, public routines, protected routines, private routines
+    - Alternatively, private routines could be placed near the public routines that use them
++ Clearly identify separate classes, if multiple exist within the same file
++ Preferably, put each class in its own file, and name that file in correspondence with the class it contains
++ Use at least two blank lines to separate top-level members of a class (e.g., routines)
+
+
+### Quotes
+
+> ...the details of a specific method of structuring a program are much less important than the fact that the program is structured consistently.
+
+
+### Takeaways
+
++ The overarching goal of layout and formatting is to make the logical structure and intent obvious
++ Following a convention consistently is vital; inconsistent formatting makes code less readable
 
